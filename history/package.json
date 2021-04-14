@@ -1,0 +1,25 @@
+{
+  "name": "history",
+  "version": "1.0.0",
+  "description": "A backend data service that returns historical data of currency exchange",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app",
+    "test": "jest tests/unit/**/*.test.js --watchAll",
+    "test:ci": "jest tests/unit/**/*.test.js --collectCoverage --collectCoverageFrom=source/**/*.js",
+    "test:integration": "PORT=8762 start-server-and-test start 8762 jest:integration",
+    "jest:integration": "jest tests/integration",
+    "lint": "eslint ."
+  },
+  "author": "Marek Czernek <mczernek@redhat.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "axios": "^0.21.1",
+    "eslint": "^7.19.0",
+    "jest": "^26.6.3",
+    "start-server-and-test": "^1.12.0"
+  }
+}
