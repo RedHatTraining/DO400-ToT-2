@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: exchange
-          image: quay.io/psolarvi/tot-exchange-service:1.0.0-SNAPSHOT
+          image: quay.io/redhattraining/do400-tot-2:1.0.0-SNAPSHOT
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
