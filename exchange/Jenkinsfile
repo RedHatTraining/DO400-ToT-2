@@ -26,11 +26,4 @@ pipeline {
             }
         }
     }
-    post {
-        failure {
-            mail to: "team@example.com"
-                subject: "Pipeline failure"
-                body: "The pipeline execution has failed!!"
-        }
-    }
 }
