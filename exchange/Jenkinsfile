@@ -8,6 +8,23 @@ pipeline {
                 }
             }
         }
+        stage('Build') {
+            environment { QUAY = credentials('QUAY') }
+            steps {
+                steps {
+                    sh '''
+                    ./mvnw package -DskipTests \
+                    -Dquarkus.container-image.build=true \
+                    -Dquarkus.container-image.registry=quay.io \
+                    -Dquarkus.container-image.group=$QUAY_USR \
+                    -Dquarkus.container-image.name=tot-exchange-service \
+                    -Dquarkus.container-image.username=$QUAY_USR \
+                    -Dquarkus.container-image.password="$QUAY_PSW" \
+                    -Dquarkus.container-image.push=true
+                    '''
+                }
+            }
+        }
     }
     post {
         failure {
