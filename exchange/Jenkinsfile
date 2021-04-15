@@ -1,0 +1,12 @@
+pipeline {
+    agent { node { label "maven" } }
+    stages {
+        stage ('Test') {
+            steps {
+                dir('exchange') {
+                    sh './mvnw test'
+                }
+            }
+        }
+    }
+}
