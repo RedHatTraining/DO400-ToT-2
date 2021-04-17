@@ -8,7 +8,7 @@ pipeline {
                 }
             }
         }
-        /*stage ('Build') {
+        stage ('Build') {
             environment { QUAY = credentials('QUAY') }
             steps {
                 sh '''
@@ -22,13 +22,13 @@ pipeline {
                     -Dquarkus.container-image.push=true
                 '''
             }
-        }*/
+        }
     }
-    /*post {
+    post {
         failure {
             mail to: "team@example.com",
                 subject: "Pipeline failure",
                 body: "The pipeline execution has failed!!"
         }
-    }*/
+    }
 }
