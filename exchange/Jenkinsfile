@@ -1,0 +1,43 @@
+pipeline {
+    agent { node { label "maven" } }
+    stages {
+        stage ('Test') {
+            steps {
+                dir('exchange') {
+                    sh './mvnw test'
+                }
+            }
+        }
+        stage ('Build') {
+            environment { QUAY = credentials('QUAY') }
+            steps {
+                dir('exchange') {
+                    sh '''
+                        ./mvnw package -DskipTests \
+                        -Dquarkus.container-image.build=true \
+                        -Dquarkus.container-image.registry=quay.io \
+                        -Dquarkus.container-image.group=redhattraining \
+                        -Dquarkus.container-image.name=do400-tot-2 \
+                        -Dquarkus.container-image.username=$QUAY_USR \
+                        -Dquarkus.container-image.password="$QUAY_PSW" \
+                        -Dquarkus.container-image.push=true
+                    '''
+                }
+            }
+        }
+        stage ('Deploy') {
+            steps {
+                dir('exchange') {
+                    sh './scripts/deploy-exchange.sh do400-tot-2'
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            mail to: "team@example.com",
+                subject: "Pipeline failure",
+                body: "The pipeline execution has failed!!"
+        }
+    }
+}
